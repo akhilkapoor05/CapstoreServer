@@ -31,6 +31,19 @@ public class AdminActionController {
 		adminService.addMerchant(merchant);
 	}
 	
+	@RequestMapping(value="/getAllMerchants", method=RequestMethod.GET)
+	public List<Merchant> getAllMerchant() {
+		List<Merchant> merch=adminService.viewAllMerchants();
+		
+		Iterator<Merchant> it=merch.iterator();
+		
+		while(it.hasNext()) {
+			System.out.println(it.next());
+		}
+		
+		return adminService.viewAllMerchants();
+	}
+	
 	@RequestMapping(value="/removeMerchant")
 	public void removeMerchant(int merchantId) {
 		
