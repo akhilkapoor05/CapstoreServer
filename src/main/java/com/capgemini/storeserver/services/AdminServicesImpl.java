@@ -11,6 +11,7 @@ import com.capgemini.storeserver.beans.Merchant;
 import com.capgemini.storeserver.beans.Product;
 import com.capgemini.storeserver.repo.AdminRepo;
 import com.capgemini.storeserver.repo.CategoryRepo;
+import com.capgemini.storeserver.repo.CouponRepo;
 import com.capgemini.storeserver.repo.MerchantRepo;
 import com.capgemini.storeserver.repo.ProductRepo;
 
@@ -35,6 +36,8 @@ public class AdminServicesImpl implements AdminServices {
 
 		merchantRepo.deleteById(merchantId);
 	}
+	@Autowired
+	private CouponRepo couponRepo;
 	
 	@Autowired
 	private CategoryRepo categoryRepo;
@@ -58,4 +61,10 @@ public class AdminServicesImpl implements AdminServices {
 		return category;
 
 	}
+	@Override
+	public void removeCoupon(int couponId) {
+		couponRepo.deleteById(couponId);
+
+	}
+	
 }
