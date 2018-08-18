@@ -23,4 +23,9 @@ public class AdminServicesImpl implements AdminServices {
 		return merchantRepo.save(merchant);
 	}
 	
+	@Override
+	public void removeMerchant(int merchantId) {
+
+		merchantRepo.deleteById(merchantId);
+	}
 }

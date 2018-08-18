@@ -23,4 +23,9 @@ public class AdminActionController {
 		adminService.addMerchant(merchant);
 	}
 	
+	@RequestMapping(value="/removeMerchant")
+	public void removeMerchant(int merchantId) {
+		
+		adminService.removeMerchant(merchantId);
+	}
 }
