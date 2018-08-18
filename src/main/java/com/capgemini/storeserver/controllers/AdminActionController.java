@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.storeserver.beans.Customer;
 import com.capgemini.storeserver.beans.Merchant;
 import com.capgemini.storeserver.beans.Product;
 import com.capgemini.storeserver.services.AdminServices;
@@ -52,4 +53,15 @@ public class AdminActionController {
 	public void removeCoupon(int couponId) {
 		adminService.removeCoupon(couponId);
 	}
+	
+	@RequestMapping(value="/getAllCustomer", method=RequestMethod.GET)
+	public List<Customer>getAllCustomer()
+	{
+		List<Customer> cust = adminService.viewAllCustomer();
+				Iterator<Customer> it=cust.iterator();
+		while(it.hasNext())
+			System.out.println(it.next());
+		return adminService.viewAllCustomer();
+	}
+	
 }
