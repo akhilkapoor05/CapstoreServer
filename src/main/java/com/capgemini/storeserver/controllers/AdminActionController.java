@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.capgemini.storeserver.beans.Coupon;
 import com.capgemini.storeserver.beans.Customer;
 import com.capgemini.storeserver.beans.Merchant;
 import com.capgemini.storeserver.beans.Product;
@@ -47,6 +48,12 @@ public class AdminActionController {
 	public void updateCategory(@RequestParam("categoryId") int categoryId,
 			@RequestParam("categoryName") String categoryName, @RequestParam("type") String type) {
 		adminService.updateCategory(categoryId, categoryName, type);
+	}
+	
+	@RequestMapping(value="/addCoupon", method=RequestMethod.POST)
+	public void addCoupon(@RequestBody Coupon coupon) {
+		
+		adminService.addCoupon(coupon);
 	}
 	
 	@RequestMapping(value="/removeCoupon")
