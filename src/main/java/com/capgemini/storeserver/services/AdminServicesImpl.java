@@ -54,6 +54,7 @@ public class AdminServicesImpl implements AdminServices {
 	@Autowired
 	private CustomerRepo customerRepo;
 	
+	
 	@Override
 	public List<Product> viewAllProducts() {
 		System.out.println(productRepo.findAll());
@@ -92,5 +93,10 @@ public class AdminServicesImpl implements AdminServices {
 	public Discount addDiscount(Discount discount) {
 		
 		return discountRepo.save(discount);
+	}
+	
+	@Override
+	public void removeDiscount(int discountId) {
+		discountRepo.deleteById(discountId);
 	}
 }
