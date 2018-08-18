@@ -7,4 +7,5 @@ public interface AdminServices {
 	
 	public Merchant addMerchant(Merchant merchant);
 	
+	public void removeMerchant(int id);
 }
