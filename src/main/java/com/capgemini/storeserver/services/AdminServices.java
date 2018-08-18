@@ -14,6 +14,8 @@ public interface AdminServices {
 	
 	public Merchant addMerchant(Merchant merchant);
 	
+	public List<Merchant> viewAllMerchants();
+	
 	public void removeMerchant(int id);
 	
 public List<Product> viewAllProducts();

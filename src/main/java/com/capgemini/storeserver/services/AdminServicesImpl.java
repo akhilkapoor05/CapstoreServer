@@ -38,6 +38,13 @@ public class AdminServicesImpl implements AdminServices {
 	}
 	
 	@Override
+	public List<Merchant> viewAllMerchants() {
+	
+		return merchantRepo.findAll();
+	}
+
+	
+	@Override
 	public void removeMerchant(int merchantId) {
 
 		merchantRepo.deleteById(merchantId);
