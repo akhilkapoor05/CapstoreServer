@@ -26,4 +26,6 @@ public List<Product> viewAllProducts();
 	
 	public List<Customer> viewAllCustomer();
 	public Discount addDiscount(Discount discount); 
+	
+	public void removeDiscount(int discountId);
 }

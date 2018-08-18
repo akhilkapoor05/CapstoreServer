@@ -76,4 +76,9 @@ public class AdminActionController {
 		
 		adminService.addDiscount(discount);
 	}
+	
+	@RequestMapping( value="/removeDiscount", method=RequestMethod.GET)
+	public void removeDiscount(@RequestParam("discountId")int discountId)  {
+		adminService.removeDiscount(discountId);
+	}
 }
