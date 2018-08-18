@@ -16,4 +16,6 @@ public interface AdminServices {
 public List<Product> viewAllProducts();
 	
 	Category updateCategory(int categoryId, String categoryName,String type);
+	
+	public void removeCoupon(int couponId);
 }
