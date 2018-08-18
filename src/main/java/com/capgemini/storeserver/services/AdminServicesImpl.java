@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.storeserver.beans.Category;
+import com.capgemini.storeserver.beans.Coupon;
 import com.capgemini.storeserver.beans.Customer;
 import com.capgemini.storeserver.beans.Merchant;
 import com.capgemini.storeserver.beans.Product;
@@ -66,6 +67,13 @@ public class AdminServicesImpl implements AdminServices {
 		return category;
 
 	}
+	
+	@Override
+	public Coupon addCoupon(Coupon coupon) {
+		
+		return couponRepo.save(coupon);
+	}
+	
 	@Override
 	public void removeCoupon(int couponId) {
 		couponRepo.deleteById(couponId);
