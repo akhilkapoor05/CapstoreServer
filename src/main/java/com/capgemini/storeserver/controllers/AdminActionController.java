@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.storeserver.beans.Coupon;
 import com.capgemini.storeserver.beans.Customer;
+import com.capgemini.storeserver.beans.Discount;
 import com.capgemini.storeserver.beans.Merchant;
 import com.capgemini.storeserver.beans.Product;
 import com.capgemini.storeserver.services.AdminServices;
@@ -70,5 +71,9 @@ public class AdminActionController {
 			System.out.println(it.next());
 		return adminService.viewAllCustomer();
 	}
-	
+	@RequestMapping(value="/addDiscount", method=RequestMethod.POST)
+	public void addDiscount(@RequestBody Discount discount) {
+		
+		adminService.addDiscount(discount);
+	}
 }
