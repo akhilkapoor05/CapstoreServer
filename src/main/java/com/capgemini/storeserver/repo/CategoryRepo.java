@@ -13,5 +13,7 @@ public interface CategoryRepo extends JpaRepository<Category, Integer>{
 
 	@Query(value="SELECT category from Category category where category.id=(:categoryId)")
 	Category updateCategory(@Param(value="categoryId") int categoryId);
+
+	public Category findByCategoryName(String categoryName);
 }
 
