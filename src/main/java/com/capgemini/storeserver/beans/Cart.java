@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -20,13 +22,21 @@ public class Cart {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="phoneNumber")
 	private Customer customer;//one to one
-	@OneToMany(mappedBy="cart",cascade=CascadeType.ALL)
-	private List<Product> products = new ArrayList<Product>();// one to many
+
 	private double totalAmount;
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="couponId")
 	private Coupon coupon;// one to one
-	
+	  @ManyToMany(cascade = CascadeType.ALL)
+		@JoinTable(name = "cart_products", joinColumns = { @JoinColumn(name = "cartId") }, inverseJoinColumns = { @JoinColumn(name = "productId") })
+		private List<Product> products = new ArrayList<Product>();// many to many
+	  
+	  public List<Product> getProducts() {
+			return products;
+		}
+		public void setProducts(List<Product> products) {
+			this.products = products;
+		}
 	
 	public Cart() {
 		super();
@@ -45,12 +55,7 @@ public class Cart {
 		this.customer = customer;
 	}
 	
-	public List<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
+	
 	public Coupon getCoupon() {
 		return coupon;
 	}

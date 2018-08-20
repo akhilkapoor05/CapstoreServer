@@ -17,7 +17,6 @@ import com.capgemini.storeserver.beans.Customer;
 import com.capgemini.storeserver.beans.Product;
 import com.capgemini.storeserver.exceptions.CustomerNotFoundException;
 import com.capgemini.storeserver.exceptions.InvalidInputException;
-import com.capgemini.storeserver.exceptions.ProductUnavailableException;
 import com.capgemini.storeserver.services.CustomerServices;
 
 @RestController
@@ -37,49 +36,90 @@ public class CustomerActionController {
 
 	// CustomerSignIn
 	@RequestMapping(value = "/customerSignIn")
-	public ResponseEntity<String> customerSignIn(String email, String password) throws InvalidInputException {
-		customer = customerService.customerSignIn(email, password);
+	public ResponseEntity<String> customerSignIn(String email, String password) {
+		try {
+			customer = customerService.customerSignIn(email, password);
+			
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		String name = customer.getCustomerName();
 		return new ResponseEntity<String>(name, HttpStatus.OK);
 	}
 
 	// getCustomerDetails
 	@RequestMapping(value = "/getCustomerDetails")
-	public Customer getCustomerDetails(String phoneNumber)
-			throws InvalidInputException {
-		customer = customerService.getCustomerDetails(phoneNumber);
+	public Customer getCustomerDetails(String phoneNumber) {
+		try {
+			customer = customerService.getCustomerDetails(phoneNumber);
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return  customer;
 	}
 
 	// getAllProducts
 	@RequestMapping(value = "/getAllProducts")
-	public List getAllProductsFromDB()
-			throws InvalidInputException {
-		List <Product> products = customerService.getAllProducts();
+	public List getAllProductsFromDB() {
+		List<Product> products = null;
+		try {
+			products = customerService.getAllProducts();
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return  products;
 	}
 
 	@RequestMapping(value = "/getProductById")
-	public Product getProductById(int productId) throws InvalidInputException {
-		Product product = customerService.getProductById(productId);
+	public Product getProductById(int productId) {
+		Product product = null;
+		try {
+			product = customerService.getProductById(productId);
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return  product;
 	}
 
 	@RequestMapping(value = "/getProductByCategory")
-	public List<Product> getProductByCategory(Category category ) throws InvalidInputException {
-		List<Product> products = customerService.getProductByCategory(category);
+	public List<Product> getProductByCategory(Category category ){
+		List<Product> products=null;
+		try {
+			products = customerService.getProductByCategory(category);
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return  products;
 	}
 
 	@RequestMapping(value = "/getDeliveryStatus")
-	public String getDeliveryStatus(int orderId) throws InvalidInputException {
-		String status = customerService.getDeliveryStatus(orderId);
+	public String getDeliveryStatus(int orderId) {
+		String status=null;
+		try {
+			status = customerService.getDeliveryStatus(orderId);
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+			return null;
+		}
 		return  status;
 	}
 	//gvk
 	@RequestMapping(value="/updateSecurityQuestion")
-	public boolean updateSecurityQuestion(String phoneNumber,String securityQuestion) throws InvalidInputException{
-		return  customerService.updateSecurityQuestion(phoneNumber, securityQuestion);
+	public boolean updateSecurityQuestion(String phoneNumber,String securityQuestion)
+	{
+		boolean val;
+		try {
+		 val = customerService.updateSecurityQuestion(phoneNumber, securityQuestion);
+		} catch (InvalidInputException e) {
+			return false;
+		}
+		
+		return val;
 	}
 
 	@RequestMapping(value="/updateSecurityAnswer")
@@ -96,7 +136,6 @@ public class CustomerActionController {
 		try {
 			return  customerService.updateCardNumber(phoneNumber, cardNumber);
 		} catch (InvalidInputException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -105,7 +144,6 @@ public class CustomerActionController {
 		try {
 			return  customerService.updateCustomerName(phoneNumber, customerName);
 		} catch (InvalidInputException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
@@ -132,62 +170,134 @@ public class CustomerActionController {
 	}
 	//aksh
 	@RequestMapping(value= "/getWishlist")
-	public List<Product> getWishlist(String phoneNumber) throws InvalidInputException {
-		return customerService.getWishlist(phoneNumber);
+	public List<Product> getWishlist(String phoneNumber) {
+		 List<Product> wishList=null;
+		try {
+			wishList = customerService.getWishlist(phoneNumber);
+		} catch (InvalidInputException e) {
+			return null;
+		}
+		
+		return wishList;
 	}
 
 	@RequestMapping(value= "/addProductToWishlist")
-	public boolean addProductToWishlist(String phoneNumber, int productId) throws InvalidInputException {
-		return customerService.addProductToWishlist(phoneNumber, productId);
+	public boolean addProductToWishlist(String phoneNumber, int productId) {
+		boolean val;
+		try {
+			 val=customerService.addProductToWishlist(phoneNumber, productId);
+		} catch (InvalidInputException e) {
+			return false;
+		}
+		
+		return val;
 	}
 
 	@RequestMapping(value= "/removeProductFromWishlist")
-	public boolean removeProductFromWishlist(String phoneNumber,int productId) throws InvalidInputException {
-		return customerService.removeProductFromWishlist(phoneNumber, productId);
+	public boolean removeProductFromWishlist(String phoneNumber,int productId) {
+		boolean val;
+		try {
+			val=customerService.removeProductFromWishlist(phoneNumber, productId);
+		} catch (InvalidInputException e) {
+			return false;
+		}
+		
+		return val;
 	}
 
 
 	@RequestMapping(value= "/setReview")
-	public void setReview(String phoneNumber,int rating,String comments,int productId) throws InvalidInputException {
-		customerService.setReviewMethod(phoneNumber, rating, comments, productId);
+	public void setReview(String phoneNumber,int rating,String comments,int productId) {
+		try {
+			customerService.setReviewMethod(phoneNumber, rating, comments, productId);
+		} catch (InvalidInputException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@RequestMapping(value= "/securityQuestion")
-	public String securityQuestion(String phoneNumber, String securityAnswer) throws InvalidInputException {
-		return customerService.securityQuestion(phoneNumber, securityAnswer);
+	public String securityQuestion(String phoneNumber, String securityAnswer) {
+		String securityQuestion = null;
+		try {
+			securityQuestion = customerService.securityQuestion(phoneNumber, securityAnswer);
+		} catch (InvalidInputException e) {
+			return null;
+		}
+		
+		return securityQuestion;
 	}
 
 	@RequestMapping(value= "/applyDiscount")
-	public double applyDiscount(int productId) throws InvalidInputException {
+	public double applyDiscount(int productId){
+		
 		return customerService.applyDiscount(productId);
 	}
+	
 	@RequestMapping(value= "/forgotPassword")
-	public String forgotPassword(String phoneNumber) throws InvalidInputException, CustomerNotFoundException {
-		return customerService.forgotPassword(phoneNumber);
+	public String forgotPassword(String phoneNumber) {
+		String forgotPassword=null;
+		try {
+			forgotPassword=customerService.forgotPassword(phoneNumber);
+		} catch (CustomerNotFoundException e) {
+			return null;
+		}
+		
+		return forgotPassword;
 	}
+	
 	@RequestMapping(value= "/onlinePayment")
-	public void onlinePayment(String phoneNumber,String cardNumber) throws InvalidInputException {
+	public void onlinePayment(String phoneNumber,String cardNumber){
 		customerService.onlinePayment(cardNumber, phoneNumber);
 	}
+	
 	@RequestMapping(value= "/addProductToNewCart")
-	public Cart addProductToNewCart(String phoneNumber,int quantity, int productId) throws InvalidInputException, ProductUnavailableException {
-		return customerService.addProductToNewCart(phoneNumber, productId, quantity);
+	public Cart addProductToNewCart(String phoneNumber,int quantity, int productId) { 
+		Cart cart=null;
+		try {
+			cart= customerService.addProductToNewCart(phoneNumber, productId, quantity);
+		}
+		catch  (Exception e) {
+			return null;
+		}
+		return cart;
 	}
 	@RequestMapping(value= "/updateCart")
-	public Cart updateCart(String phoneNumber,int quantity, int productId) throws InvalidInputException, ProductUnavailableException {
-		return customerService.updateCart(phoneNumber, productId, quantity);
+	public Cart updateCart(String phoneNumber,int quantity, int productId) {
+		Cart cart=null;
+		try {
+			cart = customerService.updateCart(phoneNumber, productId, quantity);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return cart;
 	}
 	@RequestMapping(value= "/removeFromCart")
-	public Cart removeFromCart(String phoneNumber,int productId, int quantity) throws InvalidInputException {
+	public Cart removeFromCart(String phoneNumber,int productId, int quantity) {
+		
 		return customerService.removeProductFromCart(phoneNumber, productId);
 	}
 	@RequestMapping(value= "/getCart")
-	public List<Product> getCart(String phoneNumber) throws InvalidInputException {
-		return customerService.getAllProductsFromCart(phoneNumber);
+	public List<Product> getCart(String phoneNumber) {
+		List<Product> cartList = null;
+		try {
+			cartList = customerService.getAllProductsFromCart(phoneNumber);
+		} catch (InvalidInputException e) {
+			return null;
+		}
+		
+		return cartList;
 	}
 	@RequestMapping(value="/changePassword")
-	public boolean changePassword(String phoneNumber, String newPassword) throws InvalidInputException, CustomerNotFoundException {
-		return customerService.changePassword(phoneNumber, newPassword);
+	public boolean changePassword(String phoneNumber, String newPassword) {
+		boolean val = false;
+		try {
+			val = customerService.changePassword(phoneNumber, newPassword);
+		} catch (InvalidInputException | CustomerNotFoundException e) {
+			return false;
+		}
+		
+		return val;
 	}
 
 	@RequestMapping(value="/successReturn")
@@ -196,12 +306,31 @@ public class CustomerActionController {
 	}
 
 	@RequestMapping(value= "/sortByAsc")
-	public List<Product> sortByAsc(String categoryName) throws InvalidInputException, ProductUnavailableException {
-		return customerService.getProductsByPriceAsc(categoryName);
+	public List<Product> sortByAsc(String categoryName){
+		List<Product> sortedList = null;
+		try {
+			sortedList =  customerService.getProductsByPriceAsc(categoryName);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return sortedList;
 	}
 	
 	@RequestMapping(value= "/sortByDesc")
-	public List<Product> sortByDesc(String categoryName) throws InvalidInputException, ProductUnavailableException {
-		return customerService.getProductsByPriceDesc(categoryName);
+	public List<Product> sortByDesc(String categoryName) {
+		List<Product> sortedList = null;
+		try {
+			sortedList=customerService.getProductsByPriceDesc(categoryName);
+		} catch (Exception e) {
+			return null;
+		}
+		
+		return sortedList;
 	}
+	 @RequestMapping(value="/averageRating")
+		public int averageRating(int productId) {
+			return customerService.averageRating(productId);
+		}
+	 
 }

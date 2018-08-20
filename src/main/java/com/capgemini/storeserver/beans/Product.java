@@ -6,10 +6,12 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -44,9 +46,6 @@ public class Product {
 	private Date productAddedDate;
 	private String brand;
 	private Date productRemovedDate;
-	@ManyToOne
-	@JoinColumn(name="cartId")
-	private Cart cart;
 	
 	public Product(int productId) {
 		super();
@@ -62,7 +61,24 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="categoryId")
 	private Category category;
-	
+	  private int averageRating;
+
+	  public int getAverageRating() {
+	  		return averageRating;
+	  	}
+	  	public void setAverageRating(int averageRating) {
+	  		this.averageRating = averageRating;
+	  	}
+	    
+	    @ManyToMany(fetch=FetchType.LAZY,mappedBy="products")
+	  	private List<Cart> carts = new ArrayList<Cart>();
+	    
+	    public List<Cart> getCarts() {
+	  		return carts;
+	  	}
+	  	public void setCarts(List<Cart> carts) {
+	  		this.carts = carts;
+	  	}
 	
 	
 	public Product() {
@@ -75,12 +91,7 @@ public class Product {
 	public void setCartQuantity(int cartQuantity) {
 		this.cartQuantity = cartQuantity;
 	}
-	public Cart getCart() {
-		return cart;
-	}
-	public void setCart(Cart cart) {
-		this.cart = cart;
-	}
+	
 	public Category getCategory() {
 		return category;
 	}

@@ -596,4 +596,19 @@ public class CustomerServicesImpl implements CustomerServices {
 		List<Product> productsList=productRepo.findByCategoryOrderByProductPriceDesc(category);
 		return productsList;
 	}
+	@Override
+	public int averageRating(int productId) {
+		Product prod = new Product();
+		int sum=0,averageRating=0;
+		prod = productRepo.getOne(productId);
+		List<Review>reviews=prod.getReview();
+		for (Review review : reviews) {
+			sum+=review.getProductRating();
+		}
+		averageRating=sum/(reviews.size());
+		prod.setAverageRating(averageRating);
+		productRepo.save(prod);
+		return averageRating;
+	}
+
 }

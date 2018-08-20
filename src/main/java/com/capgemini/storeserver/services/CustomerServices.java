@@ -83,4 +83,7 @@ public interface CustomerServices {
 	public List<Product> getProductsByPriceAsc(String categoryName) throws ProductUnavailableException;
 
 	public List<Product> getProductsByPriceDesc(String categoryName) throws ProductUnavailableException;
+
+	public int averageRating(int productId);
+
 }
